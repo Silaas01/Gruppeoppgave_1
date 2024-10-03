@@ -12,8 +12,11 @@ def hent_kolonne_sek():
         # Iterer over hver rad i filen
         for rad in csv_reader:
             if len(rad) > 0:  # Sjekker at raden ikke er tom
-                kolonne_verdi = rad[1]  # Henter andre kolonne
-                if "am" not in kolonne_verdi and "pm" not in kolonne_verdi: 
-                    kolonne_sek.append(kolonne_verdi)  #Legg til hvis "am" eller "pm" ikke finnes
+                # Slå sammen alle kolonneverdiene til en streng
+                rad_til_linje = " ".join(rad)
+
+                # Sjekk om "am" eller "pm" finnes i hele linjen
+                if "am" not in rad_til_linje and "pm" not in rad_til_linje:
+                    kolonne_sek.append(rad[1])  # Legg til første kolonne hvis ikke "am" eller "pm" finnes i linjen
 
     return kolonne_sek  # Returner listen
