@@ -5,7 +5,7 @@ from Kolonne_trykk_barometer import hent_kolonne_trykk1
 kolonne_trykk1 = hent_kolonne_trykk1()
 
 # Skriv ut listen
-print("Verdiene i kolonne_sek:")
+print("Verdiene i kolonne_trykk1:")
 print(kolonne_trykk1)
 
 for verdi in kolonne_trykk1:
