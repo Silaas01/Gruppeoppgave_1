@@ -16,7 +16,7 @@ def hent_kolonne_temp():
 
             # Sjekk om "am" eller "pm" finnes i hele linjen
             if "13." not in rad_til_linje and "14." not in rad_til_linje:
-                kolonne_temp.append(rad[3])  # Legg til første kolonne hvis ikke "13." finnes i linjen
+                kolonne_temp.append(rad[3])  # Legg til første kolonne hvis ikke "13." eller "14." finnes i linjen
 
 
     return kolonne_temp  # Returner listen
