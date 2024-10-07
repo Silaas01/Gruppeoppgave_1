@@ -11,6 +11,11 @@ def hent_kolonne_trykk():
         # Iterer over hver rad i filen
         for rad in csv_reader:
             if len(rad) > 0:  # Sjekker at raden ikke er tom
-                kolonne_trykk.append(rad[4])  # Legg til første kolonne hvis ikke "am" eller "pm" finnes i linjen
+                # Slå sammen alle kolonneverdiene til en streng
+                rad_til_linje = " ".join(rad)
+
+            # Sjekk om "am" eller "pm" finnes i hele linjen
+            if "13." not in rad_til_linje and "14." not in rad_til_linje:
+                kolonne_trykk.append(rad[4])  # Legg til første kolonne hvis ikke "13." eller "14." finnes i linjen
 
     return kolonne_trykk  # Returner listen
