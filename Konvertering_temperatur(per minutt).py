@@ -29,12 +29,12 @@ def minutegjennomsnitt(data_list):
         # f.eks., hvis dato_tid er "06.11.2021 14:23" -> "06.11.2021 14:23"
         minutt_key = dato_tid[:16]
 
-        # Still inn minutt key hvis den ikke finnes 
+        #Lager en nøkkel fra tidsstemplet, ved hjelp av både dato og minutt, for å gruppere alle data fra samme minutt.
         if minutt_key not in minutt_data:
             minutt_data[minutt_key] = 0
             minutt_antall[minutt_key] = 0
 
-        # Legg til temperatur til minuttets total og øk tellingen
+        #Holder en løpende sum av temperaturene og teller hvor mange avlesninger det er for hvert minutt.
         minutt_data[minutt_key] += temperatur
         minutt_antall[minutt_key] += 1
 
