@@ -11,6 +11,11 @@ def hent_kolonne_tid():
         # Iterer over hver rad i filen
         for rad in csv_reader:
             if len(rad) > 0:  # Sjekker at raden ikke er tom
+                # Slå sammen alle kolonneverdiene til en streng
+                rad_til_linje = " ".join(rad)
+
+            # Sjekk om "am" eller "pm" finnes i hele linjen
+            if "13." not in rad_til_linje:
                 kolonne_tid.append(rad[2])  # Legg til første kolonne hvis ikke "am" eller "pm" finnes i linjen
 
     return kolonne_tid  # Returner listen
