@@ -1,0 +1,20 @@
+
+
+# Importerer listene 
+from Konvertering_trykk import kolonne_trykk1
+from Utskrift_fil2_kolonne_trykk import kolonne_trykk
+
+# Function to check the number of indexes
+def sammenligne_listelengde(Konvertering_trykk, Utskrift_fil2_kolonne_trykk):
+    len_utskrift_fil1 = len(Konvertering_trykk)
+    len_utskrift_fil2 = len(Konvertering_trykk)
+
+    if len_utskrift_fil1 == len_utskrift_fil2:
+        print(f"Data listene har lik antal elementer: {len_utskrift_fil1}")
+    else:
+        print(f"Data listen for den første filen har {len_utskrift_fil1} elementer og data listen for den adnre filen har {len_utskrift_fil2} elementer.")
+
+# Call the function to compare the lists
+sammenligne_listelengde(kolonne_trykk1, kolonne_trykk)
+
+
