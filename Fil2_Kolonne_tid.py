@@ -16,6 +16,6 @@ def hent_kolonne_tid():
 
             # Sjekk om "am" eller "pm" finnes i hele linjen
             if "13." not in rad_til_linje and "14." not in rad_til_linje:
-                kolonne_tid.append(rad[2])  # Legg til første kolonne hvis ikke "am" eller "pm" finnes i linjen
+                kolonne_tid.append(rad[2])  # Legg til første kolonne hvis ikke "13." eller "14." finnes i linjen
 
     return kolonne_tid  # Returner listen
