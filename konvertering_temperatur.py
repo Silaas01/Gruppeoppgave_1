@@ -1,10 +1,10 @@
 
 from Utskrift_kolonne_dato_tid import kolonne_tid
 from Utskrift_kolonne_sek import kolonne_sek
-from Utskrift_kolonne_temperatur import kolonne_temp
+from Utskrift_kolonne_temperatur import kolonne_temperatur
 
 def timegjennomsnitt(data_list):
-    # Dictionaries for å lagre total trykk og antall avlesninger per time 
+    # Dictionaries for å lagre total temperatur og antall avlesninger per time 
     time_data = {}   
     time_antall = {} 
 
@@ -18,7 +18,7 @@ def timegjennomsnitt(data_list):
         if temperatur == '':
             continue
 
-        # Konverter barometer trykk til float og erstatt ","
+        # Konverter temperatur til float og erstatt ","
         temperatur = float(temperatur.replace(',', '.'))
 
         # Filter for gjyldige sekunder (i.e., multipler av 10)
@@ -40,10 +40,10 @@ def timegjennomsnitt(data_list):
 
     # Beregn og skriv ut gjennomsnittelig barometer trykk per time  
     for hour, total_trykk in time_data.items():
-        gjennomsnittelig_trykk = total_trykk / time_antall[hour]
+        gjennomsnittelig_trykk = total_temperatur / time_antall[hour]
         print(f"Hour: {hour}, Average Barometer Pressure: {gjennomsnittelig_trykk:.2f}")
 
-#Lag datalisten ved å kombinere kolonne_trykk1, kolonne_tid og kolonne_sek
+#Lag datalisten ved å kombinere kolonne_temperatur, kolonne_tid og kolonne_sek
 data_list = [{"dato_tid": kolonne_tid[i], "seconds": kolonne_sek[i], "temperatur": kolonne_temp[i]}
              for i in range(len(kolonne_tid))]
 
