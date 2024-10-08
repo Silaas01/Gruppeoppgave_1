@@ -1,0 +1,45 @@
+
+from datetime import datetime
+import matplotlib.pyplot as plt
+from Utskrift_kolonne_dato_tid import kolonne_tid
+from Utskrift_kolonne_temperatur import kolonne_temp
+
+# Eksempeldata (hent ut disse fra filene i virkeligheten)
+tidspunkter = [kolonne_tid] # Liste over tidspunkter som datetime-objekter
+temperaturer = [kolonne_temp]  # Liste over temperaturer
+
+# Tidsintervallet vi er interessert i
+start_tid = datetime(2021, 6, 11, 17, 31)
+slutt_tid = datetime(2021, 6, 12, 3, 5)
+
+# Finn start- og sluttindekser
+start_index = None
+slutt_index = None
+
+for i, tidspunkt in enumerate(tidspunkter):
+    if tidspunkt == start_tid:
+        start_index = i
+    if tidspunkt == slutt_tid:
+        slutt_index = i
+    # Hvis begge er funnet, bryt ut av løkken
+    if start_index is not None and slutt_index is not None:
+        break
+
+# Sjekk om vi fant de relevante tidspunktene
+if start_index is None or slutt_index is None:
+    print("Fant ikke relevante tidspunkter i dataene.")
+else:
+    # Hent ut de relevante temperaturene og tidspunktene
+    relevante_tidspunkter = tidspunkter[start_index:slutt_index + 1]
+    relevante_temperaturer = temperaturer[start_index:slutt_index + 1]
+
+    # Plotting av temperaturfallet
+    plt.plot(relevante_tidspunkter, relevante_temperaturer, label="Temperaturfall")
+    plt.xlabel('Tidspunkt')
+    plt.ylabel('Temperatur (°C)')
+    plt.title('Temperaturfall fra 11. juni 17:31 til 12. juni 03:05')
+    plt.legend()
+    plt.grid(True)
+    plt.xticks(rotation=45)  # Roter x-aksen for bedre lesbarhet
+    plt.tight_layout()
+    plt.show()
