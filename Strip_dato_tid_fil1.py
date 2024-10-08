@@ -1,27 +1,27 @@
-import csv
+
 from datetime import datetime
+from Konvertering_temp_per_min import data_list  # Importerer listen fra konvertert datafil script
 
-# Funksjonen for å trekke ut dato, time og minutt
-def hent_ut_datetime(filnavn):
-    dates = []   # Liste for å lagre datoene
-    hours = []   # Liste for å lagre timene
-    minutes = [] # Liste for å lagre minuttene
+# Funksjonen for å trekke ut dato og klokkeslett fra en liste av ordbøker
+def hent_ut_datetime(data_list):
+    datetime_set = set()  # Bruker et sett for å unngå duplikater
 
-    with open(filnavn, 'r', encoding='utf-8') as file:
-        reader = csv.reader(file, delimiter=';')
+    for entry in data_list:
+        dato_tid_str1 = entry["dato_tid"]  # Extract the date and time string from the dictionary
         
-        for row in reader:
-            if row:  # Sjekk om raden ikke er tom (dette er for å unngå å behandle tomme linjer)
-                dato_tid_str1 = row[0]  
-                
-                # Konverter dato-og klokkeslett strenger til datetime-objekter
-                dato_tid_obj1 = datetime.strptime(dato_tid_str1, '%d.%m.%Y %H:%M')  # Formatet '%d.%m.%Y %H:%M' spesifiserer at datoen er i formatet: DD.MM.ÅÅÅÅ TT:MM(f.eks. '06.11.2021 14:23')
+        # Sjekekr at lengden og spesifikke tegnplasseringer er riktige. Hvis noen av disse betingelsene ikke er oppfylt, vil konverteringsprosessen bli hoppet over for entry
+        if len(dato_tid_str1) == 16 and dato_tid_str1[2] == '.' and dato_tid_str1[5] == '.' and dato_tid_str1[13] == ':': 
+            # Konverter dato-og klokkeslett strenger til datetime-objekter
+            dato_tid_obj1 = datetime.strptime(dato_tid_str1, '%d.%m.%Y %H:%M')  # Formatet "%d.%m.%Y %H:%M" f.eks. "06.12.2021 23:58"
 
-                # Legg til de ekstraherte verdiene i listene
-                dates.append(dato_tid_obj1.date())   # Legg til dato
-                hours.append(dato_tid_obj1.hour)     # Legg til time
-                minutes.append(dato_tid_obj1.minute)  # Legg til minutt
+            # Legg til den ekstraherte datoen og klokkeslettet som en streng i settet
+            datetime_set.add(dato_tid_obj1.strftime('%d.%m.%Y %H:%M'))  # Legg til dato og klokkeslett som en streng
 
-    return dates, hours, minutes  # Returner lister med ekstraherte verdier
+    # Returner en sortert liste med unike datoer og klokkeslett
+    return sorted(list(datetime_set))
 
+# Hent ut dato og klokkeslett fra den importerte listen
+extracted_datetimes = hent_ut_datetime(data_list)
 
+# Skriv ut resultatene
+print(extracted_datetimes)
