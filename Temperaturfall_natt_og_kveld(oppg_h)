@@ -4,8 +4,7 @@ import matplotlib.pyplot as plt
 from Utskrift_kolonne_dato_tid import kolonne_tid
 from Utskrift_kolonne_temperatur import kolonne_temp
 
-# Eksempeldata (hent ut disse fra filene i virkeligheten)
-tidspunkter = [kolonne_tid] # Liste over tidspunkter som datetime-objekter
+tidspunkter = [kolonne_tid]    # Liste over tidspunkter som datetime-objekter
 temperaturer = [kolonne_temp]  # Liste over temperaturer
 
 # Tidsintervallet vi er interessert i
@@ -33,7 +32,6 @@ else:
     relevante_tidspunkter = tidspunkter[start_index:slutt_index + 1]
     relevante_temperaturer = temperaturer[start_index:slutt_index + 1]
 
-    # Plotting av temperaturfallet
     plt.plot(relevante_tidspunkter, relevante_temperaturer, label="Temperaturfall")
     plt.xlabel('Tidspunkt')
     plt.ylabel('Temperatur (°C)')
