@@ -1,0 +1,44 @@
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates  # For date formatting
+import matplotlib.ticker as mticker
+
+from Konvertering_trykk import data_list
+from Utskrift_fil2_kolonne_trykk import kolonne_trykk
+from Strip_dato_tid_fil1 import hentet_datetimes
+from Strip_dato_tid_fil2 import dato_tid_liste
+
+# Assuming datoer_fil1, datoer_fil2, and kolonne_trykk_clean are already prepared
+datoer_fil1 = hentet_datetimes
+datoer_fil2 = dato_tid_liste
+
+# Convert pressures to float, handling commas
+kolonne_trykk_clean = [float(temp.replace(',', '.')) for temp in kolonne_trykk 
+                       if isinstance(temp, (int, float, str)) and str(temp).replace(',', '').replace('.', '', 1).isdigit()]
+
+min_length = min(len(datoer_fil1), len(datoer_fil2), len(kolonne_trykk_clean))
+
+# Create the plot
+plt.figure(figsize=(12, 6))
+
+# Plot multiple lines on the same axes
+plt.plot(datoer_fil1[:min_length], kolonne_trykk_clean[:min_length], label='Trykk fra Stasjon UiS', color='blue', marker='o')
+plt.plot(datoer_fil2[:min_length], kolonne_trykk_clean[:min_length], label='Trykk fra Stasjon Sola', color='orange', marker='o')
+
+# Optionally, add more lines if needed
+plt.plot(datoer_fil1[:min_length], kolonne_trykk_clean[:min_length], label='Filtrert Trykk', color='green', marker='x')
+
+# Formatting the x-axis
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d.%m.%Y %H'))
+plt.gca().xaxis.set_major_locator(mticker.MaxNLocator(20))
+plt.gcf().autofmt_xdate(rotation=45)
+
+# Add title, labels, and legend
+plt.title('Trykk fra To Værstasjoner')
+plt.xlabel('Tid')
+plt.ylabel('Trykk (hPa)')
+plt.legend()
+plt.grid()
+
+# Show the plot with overlapping graphs
+plt.tight_layout()
+plt.show()
