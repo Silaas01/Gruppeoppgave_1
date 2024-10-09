@@ -13,10 +13,10 @@ def hent_ut_dato_tid(data_list):
         # Sjekker at lengden og spesifikke tegnplasseringer er riktige
         if len(dato_tid_str1) == 16 and dato_tid_str1[2] == '.' and dato_tid_str1[5] == '.' and dato_tid_str1[13] == ':': 
             # Konverter dato-og klokkeslett strenger til datetime-objekter
-            dato_tid_obj1 = datetime.strptime(dato_tid_str1, '%d.%m.%Y %H:%M')  # Formatet "%d.%m.%Y %H:%M"
+            dato_tid_obj1 = datetime.strptime(dato_tid_str1, '%m.%d.%Y %H:%M')  # Formatet "%d.%m.%Y %H:%M"
 
             # Legg til den ekstraherte datoen og klokkeslettet som en streng i settet, nå som DD HH:MM
-            dato_tid_set.add(dato_tid_obj1.strftime("%d %H:%M"))  # Format: DD HH:MM
+            dato_tid_set.add(dato_tid_obj1.strftime("%d %H:00"))  # Format: DD HH:MM
 
     # Returner en sortert liste med unike datoer og klokkeslett
     return sorted(list(dato_tid_set))
