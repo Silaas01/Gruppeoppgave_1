@@ -16,7 +16,7 @@ def hent_ut_dato_tid(data_list):
             dato_tid_obj1 = datetime.strptime(dato_tid_str1, '%d.%m.%Y %H:%M')  # Formatet "%d.%m.%Y %H:%M"
 
             # Legg til den ekstraherte datoen og klokkeslettet som en streng i settet, nå som DD HH:MM
-            dato_tid_set.add(dato_tid_obj1.strftime("%d,%H:%M"))  # Format: DD HH:MM
+            dato_tid_set.add(dato_tid_obj1.strftime("%d %H:%M"))  # Format: DD HH:MM
 
     # Returner en sortert liste med unike datoer og klokkeslett
     return sorted(list(dato_tid_set))
