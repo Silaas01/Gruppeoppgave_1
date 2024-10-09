@@ -1,22 +1,23 @@
 
-from Konvertering_temp_per_min import data_list  # Import the existing data_list
 
-def temperatur_hent(data_list):
-    temperatur_liste = []  # List to store the temperature values
+from Konvertering_temp_per_min import data_list  
+
+def tid_hentet(data_list):
+    tid_liste = []  # List to store the time values
 
     for entry in data_list:
-        temperatur = entry["temperatur"]  # Extract the temperature
-        # Append only if temperature is not empty
-        if temperatur:  # Check for non-empty values
-            temperatur_liste.append(temperatur.replace(',', '.'))  # Convert if necessary
+        dato_tid = entry["dato_tid"]
+        tid = dato_tid[11:16]  # Extract the time (HH:MM) from the timestamp
+        tid_liste.append(tid)
 
-    return temperatur_liste
+    return tid_liste
 
-# Extract the temperature column from the data_list
-temperatur_kolonne = temperatur_hent(data_list)
+# Extract the time column from the data_list
+tid_kolonne = tid_hentet(data_list)
 
-# Print the extracted temperature values
-print("Extracted Temperature Column:")
-for temperatur in temperatur_kolonne:
-    print(temperatur)  # Print each temperature value on a new line
+# Print only the extracted time values without additional formatting
+print("Extracted Time Column:")
+for tid in tid_kolonne:
+    print(tid)  # Print each time value on a new line
+
 
