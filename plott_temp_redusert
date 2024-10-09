@@ -1,0 +1,45 @@
+import matplotlib.pyplot as plt
+from Utskrift_dato import kolonne_tid
+from Utskrift_sek import kolonne_sek
+from Utskrift_barometer_trykk import kolonne_trykk1 
+from Split_konverter_temp import temperatur_kolonne  # Import the temperature list
+from Split_konvertert_tid import tid_kolonne  # Import the list of time points from a separate script
+from Reduserer_støy_g import beregn_gjennomsnitt
+
+# Sikrer at hver temperatur konverteres til en flyte, og at bare gyldige numeriske verdier (int, float eller strenger som kan konverteres) er inkludert.
+temperaturer = [float(temp.replace(',', '.')) for temp in temperatur_kolonne 
+                if isinstance(temp, (int, float, str)) and str(temp).replace('.', '', 1).isdigit()]
+
+# Prepare the data list for the barometer pressure
+data_list = [{"dato_tid": kolonne_tid[i], "seconds": kolonne_sek[i], "barometer_trykk": kolonne_trykk1[i]}
+             for i in range(len(kolonne_tid))]
+
+# Assuming you want to calculate averages with a window of n for barometer pressure
+n = 3  # Set the window size for averaging
+
+# Calculate average temperatures
+gyldige_tidspunkt, gjennomsnittelige_temperaturer = beregn_gjennomsnitt(kolonne_tid, temperaturer, n)
+
+# Calculate average temperatures from the imported time column
+n_temp = 2  # Set the window size for averaging for the new data
+gyldige_tid, gjennomsnitt = beregn_gjennomsnitt(tid_kolonne, temperaturer, n_temp)
+
+# Plotting the average temperature from the existing script
+plt.figure(figsize=(12, 6))
+
+# Plot for average temperature from existing script
+plt.plot(gyldige_tidspunkt, gjennomsnittelige_temperaturer, label='Average Temperature (Existing)', color='orange')
+
+# Plot for average temperature from the new script
+plt.plot(gyldige_tid, gjennomsnitt, label='Average Temperature (New)', color='blue')
+
+# Adding barometer pressure plot
+plt.plot(kolonne_tid, [data['barometer_trykk'] for data in data_list], label='Barometer Pressure', color='green')
+
+plt.xlabel('Date and Time')
+plt.ylabel('Temperature (°C) / Barometer Pressure (bar)')
+plt.title('Average Temperature and Barometer Pressure Over Time')
+plt.legend()
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
