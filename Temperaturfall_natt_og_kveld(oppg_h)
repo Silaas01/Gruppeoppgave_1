@@ -1,11 +1,13 @@
 
 from datetime import datetime
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
 from Utskrift_kolonne_dato_tid import kolonne_tid
 from Utskrift_kolonne_temperatur import kolonne_temp
 
-tidspunkter = [kolonne_tid]    # Liste over tidspunkter som datetime-objekter
-temperaturer = [kolonne_temp]  # Liste over temperaturer
+tidspunkter = kolonne_tid    # Liste over tidspunkter som datetime-objekter
+tidspunkter_datetime = [datetime.strptime(tid, "%m.%d.%Y %H:%M") for tid in tidspunkter]
+temperaturer = kolonne_temp  # Liste over temperaturer
 
 # Tidsintervallet vi er interessert i
 start_tid = datetime(2021, 6, 11, 17, 31)
@@ -15,7 +17,7 @@ slutt_tid = datetime(2021, 6, 12, 3, 5)
 start_index = None
 slutt_index = None
 
-for i, tidspunkt in enumerate(tidspunkter):
+for i, tidspunkt in enumerate(tidspunkter_datetime):
     if tidspunkt == start_tid:
         start_index = i
     if tidspunkt == slutt_tid:
@@ -29,7 +31,7 @@ if start_index is None or slutt_index is None:
     print("Fant ikke relevante tidspunkter i dataene.")
 else:
     # Hent ut de relevante temperaturene og tidspunktene
-    relevante_tidspunkter = tidspunkter[start_index:slutt_index + 1]
+    relevante_tidspunkter = tidspunkter_datetime[start_index:slutt_index + 1]
     relevante_temperaturer = temperaturer[start_index:slutt_index + 1]
 
     plt.plot(relevante_tidspunkter, relevante_temperaturer, label="Temperaturfall")
@@ -39,5 +41,7 @@ else:
     plt.legend()
     plt.grid(True)
     plt.xticks(rotation=45)  # Roter x-aksen for bedre lesbarhet
+    plt.gca().yaxis.set_major_locator(mticker.MaxNLocator(6))  # Reduserer antall tall på y-aksen
+    plt.gca().invert_yaxis()  # Dette inverterer y-aksen, fordi den i utgangspunktet gikk fra høyeste verdi til laveste og ga en voksende i stedet for synkende graf
     plt.tight_layout()
     plt.show()
