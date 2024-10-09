@@ -1,5 +1,5 @@
-from Split_konvertert_tid import tid_kolonne  # Import the list of time points from a separate script
-from Split_konverter_temp import temperatur_kolonne  # Import the list of temperature values from another script
+from Split_konvertert_tid import tid_kolonne  
+from Split_konverter_temp import temperatur_kolonne  
 
 # Sikrer at hver temperatur konverteres til en flyte, og at bare gyldige numeriske verdier (int, float eller strenger som kan konverteres) er inkludert.
 temperaturer = [float(temp.replace(',', '.')) for temp in temperatur_kolonne 
@@ -26,3 +26,12 @@ def beregn_gjennomsnitt(tidspunkt, temperaturer, n):
 
     return gyldige_tidspunkt, gjennomsnittelige_verdier
     # Returner listene over gyldige tidspunkter og gjennomsnittstemperatur verdier
+
+# Eksempel på å bruke funksjonen
+n = 30  # Antall målinger å inkludere før og etter
+gyldige_tidspunkt, gjennomsnittlige_temperaturer = beregn_gjennomsnitt(tidspunkt, temperaturer, n)
+
+# Lagre resultatene i lister for plotting senere
+resultat_tidspunkter = gyldige_tidspunkt
+resultat_temperaturer = gjennomsnittlige_temperaturer
+
